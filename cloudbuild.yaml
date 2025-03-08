@@ -5,7 +5,7 @@ steps:
       - functions
       - deploy
       - main
-      - '--region=us-east2'
+      - '--region=asia-east1'
       - '--source=.'
       - '--trigger-http' #the function can be accesed with the browser
       - '--runtime=nodejs18'
