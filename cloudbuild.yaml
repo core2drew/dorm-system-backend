@@ -4,7 +4,7 @@ steps:
       - gcloud
       - functions
       - deploy
-      - main
+      - api
       - '--region=asia-east1'
       - '--source=.'
       - '--trigger-http' #the function can be accesed with the browser
