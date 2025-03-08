@@ -1,0 +1,14 @@
+steps:
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:alpine'
+    args:
+      - gcloud
+      - functions
+      - deploy
+      - main
+      - '--region=us-east2'
+      - '--source=.'
+      - '--trigger-http' #the function can be accesed with the browser
+      - '--runtime=nodejs18'
+      - '--entry-point=apiNEST' #main function at src/main.ts
+      - '--gen2' #specifying a 2nd gen function
+      - '--allow-unauthenticated' #allowing public access
