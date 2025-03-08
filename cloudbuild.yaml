@@ -8,7 +8,9 @@ steps:
       - '--region=asia-east1'
       - '--source=.'
       - '--trigger-http' #the function can be accesed with the browser
-      - '--runtime=nodejs18'
+      - '--runtime=nodejs20'
       - '--entry-point=apiNEST' #main function at src/main.ts
       - '--gen2' #specifying a 2nd gen function
       - '--allow-unauthenticated' #allowing public access
+options:
+  logging: CLOUD_LOGGING_ONLY
