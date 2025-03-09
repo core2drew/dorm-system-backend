@@ -27,4 +27,5 @@ createNestServer(server)
     }
   })
   .catch((err) => Logger.error('Nest broken', err));
+
 http('apiNEST', server); // <- entry point definition
