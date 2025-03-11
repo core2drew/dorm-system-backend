@@ -1,12 +1,21 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { AppService } from './app.service';
+import { SendMessageDto } from './dto/send-message.dto';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  sayHello() {
+    return {
+      message: 'Hello world from Dorm system 🥳',
+    };
+  }
+
+  @Post('send-message')
+  sendMessage(@Body() body: SendMessageDto) {
+    const { phoneNumber, message } = body;
+    return this.appService.sendMessage(phoneNumber, message);
   }
 }
