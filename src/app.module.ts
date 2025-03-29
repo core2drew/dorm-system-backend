@@ -7,10 +7,11 @@ import { MessageService } from './services/message/message.service';
 import { UserController } from './user/user.controller';
 import { UserService } from './services/user/user.service';
 import { FirebaseModule } from './modules/firebase/firebase.module';
+import { UserRepository } from './repositories/user-repository/user-repository';
 
 @Module({
   imports: [ConfigModule.forRoot({ cache: true }), FirebaseModule],
   controllers: [AppController, MessageController, UserController],
-  providers: [AppService, MessageService, UserService],
+  providers: [AppService, MessageService, UserService, UserRepository],
 })
 export class AppModule {}
