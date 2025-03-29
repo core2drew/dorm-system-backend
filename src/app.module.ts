@@ -5,9 +5,10 @@ import { MessageService } from './services/message/message.service';
 import { UserController } from './user/user.controller';
 import { UserService } from './services/user/user.service';
 import { FirebaseModule } from './modules/firebase/firebase.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [FirebaseModule],
+  imports: [ConfigModule.forRoot({ cache: true }), FirebaseModule],
   controllers: [AppController, MessageController, UserController],
   providers: [MessageService, UserService],
 })
