@@ -1,8 +1,24 @@
-import { IsNotEmpty, IsPhoneNumber, IsString } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsPhoneNumber,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+import { Type } from 'class-transformer';
+
+export class UserContactDTO {
+  @IsNotEmpty()
+  uid: string;
+
+  @IsNotEmpty()
+  @IsPhoneNumber()
+  phoneNumber: string;
+}
 
 export class SendMessageDTO {
-  @IsPhoneNumber('PH', { each: true })
-  phoneNumbers: string[];
+  @ValidateNested({ each: true })
+  @Type(() => UserContactDTO)
+  userContact: UserContactDTO[];
 
   @IsNotEmpty()
   @IsString()
