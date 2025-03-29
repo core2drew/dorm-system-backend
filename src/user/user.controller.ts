@@ -1,5 +1,5 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { CreateUserDTO } from 'src/dto/user/create-user.dto';
+import { CreateUserDTO, UpdateUserDTO } from 'src/dto/user/user.dto';
 import { UserService } from 'src/services/user/user.service';
 
 @Controller('user')
@@ -7,7 +7,7 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Post('create')
-  createTenant(@Body() body: CreateUserDTO) {
+  createUser(@Body() body: CreateUserDTO) {
     const { email, password, firstName, lastName, phoneNumber } = body;
 
     return this.userService.createUser({
@@ -16,6 +16,18 @@ export class UserController {
       lastName,
       phoneNumber,
       password,
+    });
+  }
+
+  @Post('update')
+  updateUser(@Body() body: UpdateUserDTO) {
+    const { id, firstName, lastName, phoneNumber } = body;
+
+    return this.userService.updateUser({
+      id,
+      firstName,
+      lastName,
+      phoneNumber,
     });
   }
 }

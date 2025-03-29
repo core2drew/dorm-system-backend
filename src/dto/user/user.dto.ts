@@ -1,6 +1,9 @@
 import { IsEmail, IsNotEmpty, IsPhoneNumber, IsString } from 'class-validator';
 
-export class CreateUserDTO {
+export class UserDTO {
+  @IsNotEmpty()
+  id: string;
+
   @IsEmail()
   email: string;
 
@@ -19,3 +22,7 @@ export class CreateUserDTO {
   @IsString()
   lastName: string;
 }
+
+export type CreateUserDTO = Omit<UserDTO, 'id'>;
+
+export type UpdateUserDTO = Partial<Omit<UserDTO, 'email'>>;
