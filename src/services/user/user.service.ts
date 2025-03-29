@@ -10,7 +10,7 @@ import { FirebaseService } from 'src/modules/firebase/services/firebase-service/
 
 @Injectable()
 export class UserService {
-  constructor(private firebaseRepo: FirebaseService) {}
+  constructor(private firebase: FirebaseService) {}
   errorHandler(error) {
     if (error.code) {
       throw new BadRequestException(`Error: ${error.message}`);
@@ -23,8 +23,8 @@ export class UserService {
 
   async createUser(user: CreateUserDTO) {
     try {
-      const { uid } = await this.firebaseRepo.auth.createUser(user);
-      const userRef = this.firebaseRepo.initCollection('users').doc(uid);
+      const { uid } = await this.firebase.auth.createUser(user);
+      const userRef = this.firebase.initCollection('users').doc(uid);
 
       await userRef.set({
         id: uid,
@@ -42,10 +42,10 @@ export class UserService {
 
   async updateUser(user: UpdateUserDTO) {
     try {
-      const { uid } = await this.firebaseRepo.auth.updateUser(user.id, {
+      const { uid } = await this.firebase.auth.updateUser(user.id, {
         ...user,
       });
-      const userRef = this.firebaseRepo.initCollection('users').doc(uid);
+      const userRef = this.firebase.initCollection('users').doc(uid);
       await userRef.update({
         ...user,
       });
