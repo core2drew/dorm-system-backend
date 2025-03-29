@@ -5,13 +5,14 @@ const server = express();
 import { http } from '@google-cloud/functions-framework';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { NestFactory } from '@nestjs/core';
-import { Logger } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 
 export const createNestServer = async (expressInstance) => {
   const app = await NestFactory.create(
     AppModule,
     new ExpressAdapter(expressInstance),
   );
+  app.useGlobalPipes(new ValidationPipe());
   app.enableCors();
   return app.init();
 };
