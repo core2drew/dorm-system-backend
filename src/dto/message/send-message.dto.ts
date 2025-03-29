@@ -1,8 +1,7 @@
-import { IsArray, IsNotEmpty, IsPhoneNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsPhoneNumber, IsString } from 'class-validator';
 
 export class SendMessageDTO {
-  @IsArray()
-  @IsPhoneNumber()
+  @IsPhoneNumber('PH', { each: true })
   phoneNumbers: string[];
 
   @IsNotEmpty()

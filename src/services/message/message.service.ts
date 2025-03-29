@@ -12,9 +12,9 @@ export class MessageService {
     const messagingServiceSid = this.configService.get<string>(
       'SMS_MESSAGING_SERVICE_ID',
     );
-
+    const result = [];
     const client = new Twilio(accountSid, authToken);
-    for (const number in phoneNumbers) {
+    for (const number of phoneNumbers) {
       try {
         const response = await client.messages.create({
           body: messageBody,
@@ -22,10 +22,19 @@ export class MessageService {
           messagingServiceSid,
           to: number,
         });
-        console.log(`Message sent to ${number}: ${response.sid}`);
+        result.push({
+          status: 'success',
+          phoneNumber: number,
+          id: response.sid,
+        });
       } catch (error) {
-        console.error(`Failed to send message to ${number}:`, error);
+        result.push({
+          status: 'error',
+          phoneNumber: number,
+          message: error.message,
+        });
       }
     }
+    return result;
   }
 }
