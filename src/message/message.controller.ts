@@ -8,7 +8,7 @@ export class MessageController {
 
   @Post('send')
   sendMessage(@Body() body: SendMessageDTO) {
-    const { userContact, message } = body;
-    return this.messageService.sendMessage(userContact, message);
+    const { userContacts, message } = body;
+    return this.messageService.sendMessage(userContacts, message);
   }
 }

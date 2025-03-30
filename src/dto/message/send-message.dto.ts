@@ -18,7 +18,7 @@ export class UserContactDTO {
 export class SendMessageDTO {
   @ValidateNested({ each: true })
   @Type(() => UserContactDTO)
-  userContact: UserContactDTO[];
+  userContacts: UserContactDTO[];
 
   @IsNotEmpty()
   @IsString()
