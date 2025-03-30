@@ -12,7 +12,7 @@ export class UserContactDTO {
 
   @IsNotEmpty()
   @IsPhoneNumber()
-  phoneNumber: string;
+  mobileNo: string;
 }
 
 export class SendMessageDTO {

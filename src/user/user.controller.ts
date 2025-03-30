@@ -8,26 +8,26 @@ export class UserController {
 
   @Post('create')
   createUser(@Body() body: CreateUserDTO) {
-    const { email, password, firstName, lastName, phoneNumber } = body;
+    const { email, password, firstName, lastName, mobileNo } = body;
 
     return this.userService.createUser({
       email,
       firstName,
       lastName,
-      phoneNumber,
+      mobileNo,
       password,
     });
   }
 
   @Post('update')
   updateUser(@Body() body: UpdateUserDTO) {
-    const { id, firstName, lastName, phoneNumber } = body;
+    const { id, firstName, lastName, mobileNo } = body;
 
     return this.userService.updateUser({
       id,
       firstName,
       lastName,
-      phoneNumber,
+      mobileNo,
     });
   }
 }

@@ -9,7 +9,7 @@ export class UserDTO {
 
   @IsNotEmpty()
   @IsPhoneNumber()
-  phoneNumber: string;
+  mobileNo: string;
 
   @IsNotEmpty()
   password: string;

@@ -43,18 +43,18 @@ export class MessageService {
     console.log(userContact);
 
     for (const contact of userContact) {
-      const { uid, phoneNumber } = contact;
+      const { uid, mobileNo } = contact;
       try {
         const response = await client.messages.create({
           body: messageBody,
           from: TWILIO.SENDER_NO,
           messagingServiceSid,
-          to: phoneNumber,
+          to: mobileNo,
         });
         sendToUids.push(uid);
         result.push({
           status: 'success',
-          phoneNumber,
+          mobileNo,
           id: response.sid,
         });
       } catch (error) {
