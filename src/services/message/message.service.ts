@@ -40,8 +40,6 @@ export class MessageService {
       FirebaseFirestore.DocumentData
     >;
 
-    console.log(userContact);
-
     for (const contact of userContact) {
       const { uid, mobileNo } = contact;
       try {
@@ -69,6 +67,9 @@ export class MessageService {
     }
     const messageData = await messagesRef.get();
 
-    return messageData.data();
+    return {
+      ...messageData.data(),
+      id: messagesRef.id,
+    };
   }
 }
