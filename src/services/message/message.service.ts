@@ -40,9 +40,9 @@ export class MessageService {
       FirebaseFirestore.DocumentData
     >;
 
-    for (const contact of userContact) {
-      const { uid, mobileNo } = contact;
-      try {
+    try {
+      for (const contact of userContact) {
+        const { uid, mobileNo } = contact;
         const response = await client.messages.create({
           body: messageBody,
           from: TWILIO.SENDER_NO,
@@ -55,20 +55,22 @@ export class MessageService {
           mobileNo,
           id: response.sid,
         });
-      } catch (error) {
-        this.errorHandler(error);
-      } finally {
-        messagesRef = await this.firebase.initCollection('messages').add({
-          message: messageBody,
-          timestamp: Timestamp.now(),
-          uids: sendToUids,
-        });
       }
+    } catch (error) {
+      this.errorHandler(error);
+    } finally {
+      messagesRef = await this.firebase.initCollection('messages').add({
+        message: messageBody,
+        timestamp: Timestamp.now(),
+        uids: sendToUids,
+      });
     }
+
     const messageData = await messagesRef.get();
 
     return {
       ...messageData.data(),
+      timestamp: messageData.createTime.toDate(),
       id: messagesRef.id,
     };
   }
