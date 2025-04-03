@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { app, auth } from 'firebase-admin';
-
 @Injectable()
 export class FirebaseService {
   auth: auth.Auth;

@@ -7,7 +7,6 @@ import { CreateUserDTO, UpdateUserDTO } from 'src/dto/user/user.dto';
 import { Role } from 'src/enums/role.enum';
 
 import { FirebaseService } from 'src/modules/firebase/services/firebase-service/firebase-service';
-
 @Injectable()
 export class UserService {
   constructor(private firebase: FirebaseService) {}
@@ -31,11 +30,13 @@ export class UserService {
         ...user,
         role: Role.TENANT,
         isActive: true,
+        approved: true,
       });
       const userData = await userRef.get();
 
       return userData.data();
     } catch (error) {
+      console.log(error);
       this.errorHandler(error);
     }
   }

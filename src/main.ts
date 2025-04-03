@@ -5,14 +5,29 @@ const server = express();
 import { http } from '@google-cloud/functions-framework';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import { NestFactory } from '@nestjs/core';
-import { Logger, ValidationPipe } from '@nestjs/common';
+import { BadRequestException, Logger, ValidationPipe } from '@nestjs/common';
 
 export const createNestServer = async (expressInstance) => {
   const app = await NestFactory.create(
     AppModule,
     new ExpressAdapter(expressInstance),
   );
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      transform: true,
+      exceptionFactory: (errors) => {
+        const formattedErrors = errors.reduce((accumulator, error) => {
+          accumulator[error.property] = Object.values(error.constraints);
+          return accumulator;
+        }, {});
+        return new BadRequestException({
+          message: 'Validation failed',
+          errors: formattedErrors,
+        });
+      },
+    }),
+  );
   app.enableCors();
   return app.init();
 };
