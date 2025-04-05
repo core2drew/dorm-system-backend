@@ -3,6 +3,7 @@ import {
   Injectable,
   InternalServerErrorException,
 } from '@nestjs/common';
+import { Timestamp } from 'firebase-admin/firestore';
 import { CreateUserDTO, UpdateUserDTO } from 'src/dto/user/user.dto';
 import { Role } from 'src/enums/role.enum';
 
@@ -31,6 +32,7 @@ export class UserService {
         role: Role.TENANT,
         isActive: true,
         approved: true,
+        createdAt: Timestamp.now(),
       });
       const userData = await userRef.get();
 
@@ -49,6 +51,7 @@ export class UserService {
       const userRef = this.firebase.initCollection('users').doc(uid);
       await userRef.update({
         ...user,
+        updatedAt: Timestamp.now(),
       });
       const userData = await userRef.get();
 
