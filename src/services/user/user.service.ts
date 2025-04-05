@@ -33,10 +33,15 @@ export class UserService {
         isActive: true,
         approved: true,
         createdAt: Timestamp.now(),
+        updatedAt: Timestamp.now(),
       });
       const userData = await userRef.get();
-
-      return userData.data();
+      const { createdAt, updatedAt, ...rest } = userData.data();
+      return {
+        ...rest,
+        createdAt: (createdAt as Timestamp).toDate(),
+        updatedAt: (updatedAt as Timestamp).toDate(),
+      };
     } catch (error) {
       console.log(error);
       this.errorHandler(error);
@@ -54,8 +59,13 @@ export class UserService {
         updatedAt: Timestamp.now(),
       });
       const userData = await userRef.get();
+      const { createdAt, updatedAt, ...rest } = userData.data();
 
-      return userData.data();
+      return {
+        ...rest,
+        createdAt: (createdAt as Timestamp).toDate(),
+        updatedAt: (updatedAt as Timestamp).toDate(),
+      };
     } catch (error) {
       this.errorHandler(error);
     }
