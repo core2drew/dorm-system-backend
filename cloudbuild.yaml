@@ -2,6 +2,14 @@ steps:
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:alpine'
     args:
       - gcloud
+      - pubsub
+      - topics
+      - create
+      - demo-topic # Replace with your actual topic name
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:alpine'
+    args:
+      - gcloud
       - functions
       - deploy
       - api
