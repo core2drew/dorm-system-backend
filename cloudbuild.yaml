@@ -6,6 +6,13 @@ steps:
       - topics
       - create
       - demo-topic # Replace with your actual topic name
+      - '-c'
+      - |
+        if ! gcloud pubsub topics describe demo-topic; then
+          gcloud pubsub topics create demo-topic
+        else
+          echo "Topic demo-topic already exists. Skipping creation."
+        fi
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:alpine'
     args:
