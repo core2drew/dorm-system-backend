@@ -1,14 +1,11 @@
 steps:
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk:alpine'
+    entrypoint: 'bash'
     args:
-      - gcloud
-      - pubsub
-      - topics
-      - create
-      - demo-topic # Replace with your actual topic name
       - '-c'
       - |
-        if ! gcloud pubsub topics describe demo-topic; then
+        if ! gcloud pubsub topics describe demo-topic > /dev/null 2>&1; then
+          echo "Creating topic: demo-topic"
           gcloud pubsub topics create demo-topic
         else
           echo "Topic demo-topic already exists. Skipping creation."
