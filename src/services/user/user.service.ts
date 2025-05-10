@@ -59,5 +59,12 @@ export class UserService {
     }
   }
 
-  // TODO - fetch active users
+  async getUsers() {
+    const snapshot = await this.firebase.initCollection('users').get();
+    const users = [];
+    snapshot.forEach((doc) => {
+      users.push(doc.data());
+    });
+    return users;
+  }
 }
