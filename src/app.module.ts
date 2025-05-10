@@ -6,7 +6,8 @@ import { UserController } from './user/user.controller';
 import { UserService } from './services/user/user.service';
 import { FirebaseModule } from './modules/firebase/firebase.module';
 import { ConfigModule } from '@nestjs/config';
-import { PublisherController } from './publisher/publisher.controller';
+import { NotificationController } from './notification/notification.controller';
+import { BillService } from './services/bill/bill.service';
 
 @Module({
   imports: [ConfigModule.forRoot({ cache: true }), FirebaseModule],
@@ -14,8 +15,8 @@ import { PublisherController } from './publisher/publisher.controller';
     AppController,
     MessageController,
     UserController,
-    PublisherController,
+    NotificationController,
   ],
-  providers: [MessageService, UserService],
+  providers: [MessageService, UserService, BillService],
 })
 export class AppModule {}
