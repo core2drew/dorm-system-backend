@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { Timestamp } from 'firebase-admin/firestore';
-import { CreateUserDTO, UpdateUserDTO } from 'src/dto/user/user.dto';
+import {
+  CreateUserDTO,
+  UpdateUserDTO,
+  UserResponseDTO,
+} from 'src/dto/user/user.dto';
 import { Role } from 'src/enums/role.enum';
 
 import { FirebaseService } from 'src/modules/firebase/services/firebase-service/firebase-service';
@@ -59,8 +63,7 @@ export class UserService {
     }
   }
 
-  // TODO - fetch active users
-  async getUsers() {
+  async getUsers(): Promise<UserResponseDTO[]> {
     const users = [];
     const snapshot = await this.firebase
       .initCollection('users')
@@ -68,7 +71,6 @@ export class UserService {
       .where('role', '==', Role.TENANT)
       .get();
     snapshot.forEach((doc) => users.push(doc.data()));
-
     return users;
   }
 }
