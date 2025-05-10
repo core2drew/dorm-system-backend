@@ -59,12 +59,16 @@ export class UserService {
     }
   }
 
+  // TODO - fetch active users
   async getUsers() {
-    const snapshot = await this.firebase.initCollection('users').get();
     const users = [];
-    snapshot.forEach((doc) => {
-      users.push(doc.data());
-    });
+    const snapshot = await this.firebase
+      .initCollection('users')
+      .where('isActive', '==', true)
+      .where('role', '==', Role.TENANT)
+      .get();
+    snapshot.forEach((doc) => users.push(doc.data()));
+
     return users;
   }
 }
