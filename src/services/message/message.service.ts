@@ -1,30 +1,18 @@
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Twilio } from 'twilio';
 import { TWILIO } from '../../enums/twilio.enum';
 import { ConfigService } from '@nestjs/config';
 import { FirebaseService } from 'src/modules/firebase/services/firebase-service/firebase-service';
 import { Timestamp } from 'firebase-admin/firestore';
 import { UserContactDTO } from 'src/dto/message/send-message.dto';
+import { handleServiceError } from 'src/shared/utils/error-handler.util';
 @Injectable()
 export class MessageService {
+  readonly serviceName = 'message-service';
   constructor(
     private configService: ConfigService,
     private firebase: FirebaseService,
   ) {}
-
-  errorHandler(error) {
-    if (error.code) {
-      throw new BadRequestException(`Error: ${error.message}`);
-    }
-
-    throw new InternalServerErrorException(
-      `User creation failed: ${error.message}`,
-    );
-  }
 
   async sendMessage(userContact: UserContactDTO[], messageBody: string) {
     const accountSid = this.configService.get<string>('SMS_SERVICE_ACC_SID');
@@ -57,7 +45,7 @@ export class MessageService {
         });
       }
     } catch (error) {
-      this.errorHandler(error);
+      handleServiceError(error, `${this.serviceName}`);
     } finally {
       messagesRef = await this.firebase.initCollection('messages').add({
         message: messageBody,

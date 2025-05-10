@@ -1,25 +1,14 @@
-import {
-  BadRequestException,
-  Injectable,
-  InternalServerErrorException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Timestamp } from 'firebase-admin/firestore';
 import { CreateUserDTO, UpdateUserDTO } from 'src/dto/user/user.dto';
 import { Role } from 'src/enums/role.enum';
 
 import { FirebaseService } from 'src/modules/firebase/services/firebase-service/firebase-service';
+import { handleServiceError } from 'src/shared/utils/error-handler.util';
 @Injectable()
 export class UserService {
+  readonly serviceName = 'user-service';
   constructor(private firebase: FirebaseService) {}
-  errorHandler(error) {
-    if (error.code) {
-      throw new BadRequestException(`Error: ${error.message}`);
-    }
-
-    throw new InternalServerErrorException(
-      `User creation failed: ${error.message}`,
-    );
-  }
 
   async createUser(user: CreateUserDTO) {
     try {
@@ -43,8 +32,7 @@ export class UserService {
         updatedAt: (updatedAt as Timestamp).toDate(),
       };
     } catch (error) {
-      console.log(error);
-      this.errorHandler(error);
+      handleServiceError(error, `${this.serviceName}-create`);
     }
   }
 
@@ -67,7 +55,9 @@ export class UserService {
         updatedAt: (updatedAt as Timestamp).toDate(),
       };
     } catch (error) {
-      this.errorHandler(error);
+      handleServiceError(error, `${this.serviceName}-update`);
     }
   }
+
+  // TODO - fetch active users
 }
