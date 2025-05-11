@@ -1,14 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { Timestamp } from 'firebase-admin/firestore';
-import {
-  CreateUserDTO,
-  UpdateUserDTO,
-  UserResponseDTO,
-} from 'src/dto/user/user.dto';
+import { CreateUserDTO, UpdateUserDTO } from 'src/dto/user/user.dto';
 import { Role } from 'src/enums/role.enum';
 
 import { FirebaseService } from 'src/modules/firebase/services/firebase-service/firebase-service';
 import { handleServiceError } from 'src/shared/utils/error-handler.util';
+import { User } from './models/user.model';
 @Injectable()
 export class UserService {
   readonly serviceName = 'user-service';
@@ -63,7 +60,7 @@ export class UserService {
     }
   }
 
-  async getUsers(): Promise<UserResponseDTO[]> {
+  async getUsers(): Promise<User[]> {
     const users = [];
     const snapshot = await this.firebase
       .initCollection('users')
