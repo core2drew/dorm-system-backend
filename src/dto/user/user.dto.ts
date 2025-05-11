@@ -32,10 +32,3 @@ export class UserDTO {
 export type CreateUserDTO = Omit<UserDTO, 'id'>;
 
 export type UpdateUserDTO = Partial<Omit<UserDTO, 'email'>>;
-
-export type UserResponseDTO = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  mobileNo: string;
-};
