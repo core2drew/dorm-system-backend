@@ -1,37 +1,26 @@
-import { Controller, Post } from '@nestjs/common';
-import { BillService } from 'src/services/bill/bill.service';
+import { Body, Controller, Post } from '@nestjs/common';
+import { SendMessageDTO } from 'src/dto/message/send-message.dto';
 import { MessageService } from 'src/services/message/message.service';
-import { UserService } from 'src/services/user/user.service';
-import { notifBillTemplate } from './notification-sms.template';
+import { NotificationService } from 'src/services/notification/notification.service';
 
 @Controller('notification')
 export class NotificationController {
   constructor(
+    private notificationService: NotificationService,
     private messageService: MessageService,
-    private billService: BillService,
-    private userService: UserService,
   ) {}
 
-  private async generateNotifications() {
-    const users = await this.userService.getUsers();
-    const userBills =
-      await this.billService.getTenantsConsumptionAndBill(users);
-
-    const notifs = userBills.map((userBill) => {
-      const { mobileNo } = userBill;
-      return {
-        message: notifBillTemplate(userBill),
-        mobileNo,
-      };
-    });
-
-    return notifs;
+  @Post('announcement')
+  sendAnnouncement(@Body() body: SendMessageDTO) {
+    const { userContacts, message } = body;
+    return this.notificationService.sendAnnouncementMessage(
+      userContacts,
+      message,
+    );
   }
 
-  @Post('send-bill')
+  @Post('bill')
   sendMessage() {
-    // TODO get user account details
-
-    return this.generateNotifications();
+    return this.notificationService.sendBillNotification();
   }
 }
