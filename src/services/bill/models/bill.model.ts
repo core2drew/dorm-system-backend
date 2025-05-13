@@ -6,6 +6,7 @@ export type WaterConsumptionSummary = {
   totalBill: number;
 };
 
-export type TenantConsumptionBill = User & {
+export type TenantConsumptionBill = {
+  user: User;
   bill: WaterConsumptionSummary;
 };

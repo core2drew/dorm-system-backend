@@ -18,12 +18,12 @@ export class BillService {
     const now = Timestamp.now().toDate();
 
     const userBill = await Promise.all(
-      users.map(async ({ id, ...rest }) => {
+      users.map(async (user) => {
+        const { id } = user;
         const bill = await this.computeTenantConsumptionAndBill(id, now);
         return {
-          id,
+          user,
           bill,
-          ...rest,
         };
       }),
     );
