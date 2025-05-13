@@ -47,13 +47,13 @@ export class NotificationService {
     try {
       for (const contact of userContact) {
         const { uid, mobileNo } = contact;
-        // const sid = await this.messageService.sendMessage(contact, messageBody);
+        const sid = await this.messageService.sendMessage(contact, messageBody);
         sendToUids.push(uid);
-        // result.push({
-        //   status: 'success',
-        //   mobileNo,
-        //   id: sid,
-        // });
+        result.push({
+          status: 'success',
+          mobileNo,
+          id: sid,
+        });
       }
     } catch (error) {
       handleServiceError(error, `${this.serviceName}-announcement`);
