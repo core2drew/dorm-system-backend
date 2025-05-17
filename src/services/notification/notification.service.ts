@@ -20,6 +20,7 @@ export class NotificationService {
 
   private async generateBillNotifications() {
     const users = await this.userService.getUsers();
+    console.log('users', users);
     const userBills =
       await this.billService.getTenantsConsumptionAndBill(users);
 
@@ -76,7 +77,7 @@ export class NotificationService {
 
   async sendBillNotification() {
     const notifs = await this.generateBillNotifications();
-    console.log(notifs);
+    console.log('notifs', notifs);
     const result = [];
     let messagesRef: FirebaseFirestore.DocumentReference<
       FirebaseFirestore.DocumentData,
