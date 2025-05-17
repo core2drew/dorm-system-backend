@@ -14,7 +14,7 @@ export class MessageService {
     const apiKey = this.configService.get<string>('VONAGE_API_KEY');
     const apiSecret = this.configService.get<string>('VONAGE_API_SECRET');
     console.log(apiKey);
-    console.log(apiSecret);
+    console.log(this.configService.get<string>('twilio_account_sid'));
     const vonage = new Vonage({
       apiKey,
       apiSecret,
