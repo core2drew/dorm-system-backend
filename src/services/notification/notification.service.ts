@@ -76,6 +76,7 @@ export class NotificationService {
 
   async sendBillNotification() {
     const notifs = await this.generateBillNotifications();
+    console.log(notifs);
     const result = [];
     let messagesRef: FirebaseFirestore.DocumentReference<
       FirebaseFirestore.DocumentData,
