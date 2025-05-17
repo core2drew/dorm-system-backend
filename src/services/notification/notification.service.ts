@@ -20,10 +20,9 @@ export class NotificationService {
 
   private async generateBillNotifications() {
     const users = await this.userService.getUsers();
-    console.log('users', users);
     const userBills =
       await this.billService.getTenantsConsumptionAndBill(users);
-
+    console.log('userBills', userBills);
     const notifs = userBills.map((userBill) => {
       const { user } = userBill;
       return {
@@ -31,7 +30,7 @@ export class NotificationService {
         message: notifBillTemplate(userBill),
       };
     });
-
+    console.log('notifs', notifs);
     return notifs;
   }
 
@@ -77,7 +76,6 @@ export class NotificationService {
 
   async sendBillNotification() {
     const notifs = await this.generateBillNotifications();
-    console.log('notifs', notifs);
     const result = [];
     let messagesRef: FirebaseFirestore.DocumentReference<
       FirebaseFirestore.DocumentData,
