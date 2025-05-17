@@ -53,21 +53,16 @@ export class BillService {
     const startUTCDate = fromZonedTime(startOfMonth, 'Asia/Singapore');
     const endUTCDate = fromZonedTime(startOfNextMonth, 'Asia/Singapore');
 
-    const startTimestamp = Timestamp.fromDate(startUTCDate)
-      .toDate()
-      .toISOString();
-    const endTimestamp = Timestamp.fromDate(endUTCDate).toDate().toISOString();
+    const startTimestamp = Timestamp.fromDate(startUTCDate).toDate();
+    const endTimestamp = Timestamp.fromDate(endUTCDate).toDate();
 
     console.log('startTimestamp', startTimestamp);
     console.log('startUTCDate', startUTCDate);
 
-    console.log('endTimestamp', endTimestamp);
-    console.log('endUTCDate', endUTCDate);
-
     const snapshot = await this.firebase
       .initCollection('water_consumption')
       .where('uid', '==', uid)
-      .where('timestamp', '>', startTimestamp)
+      .where('timestamp', '>=', startTimestamp)
       .where('timestamp', '<', endTimestamp)
       .get();
 
