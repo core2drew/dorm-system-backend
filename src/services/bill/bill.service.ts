@@ -27,6 +27,7 @@ export class BillService {
         };
       }),
     );
+    console.log('userBill', userBill);
     const filteredUserWithRecord = await userBill.filter(
       (d) => !!d.bill.totalConsumption,
     );

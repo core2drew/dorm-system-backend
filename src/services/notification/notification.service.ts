@@ -22,7 +22,6 @@ export class NotificationService {
     const users = await this.userService.getUsers();
     const userBills =
       await this.billService.getTenantsConsumptionAndBill(users);
-    console.log('userBills', userBills);
     const notifs = userBills.map((userBill) => {
       const { user } = userBill;
       return {
