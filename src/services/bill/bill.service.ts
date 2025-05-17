@@ -7,6 +7,8 @@ import {
   WaterConsumptionSummary,
 } from './models/bill.model';
 import { User } from '../user/models/user.model';
+import { DateTime } from 'luxon';
+import { fromZonedTime } from 'date-fns-tz';
 @Injectable()
 export class BillService {
   readonly serviceName = 'bill-service';
@@ -41,6 +43,7 @@ export class BillService {
     let totalPricePerMeter = 0;
     let totalConsumption = 0;
     let recordCount = 0;
+
     const startOfMonth = new Date(date.getFullYear(), date.getMonth(), 1);
     const startOfNextMonth = new Date(
       date.getFullYear(),
@@ -48,14 +51,17 @@ export class BillService {
       1,
     );
 
-    const startTimestamp = Timestamp.fromDate(startOfMonth)
+    const startUTCDate = fromZonedTime(startOfMonth, 'Asia/Singapore');
+    const endUTCDate = fromZonedTime(startOfNextMonth, 'Asia/Singapore');
+
+    const startTimestamp = Timestamp.fromDate(startUTCDate)
       .toDate()
       .toISOString();
-    const endTimestamp = Timestamp.fromDate(startOfNextMonth)
-      .toDate()
-      .toISOString();
-    console.log('startTimestamp', startTimestamp);
+    const endTimestamp = Timestamp.fromDate(endUTCDate).toDate().toISOString();
+
+    console.log('startTimestamp', startUTCDate);
     console.log('endTimestamp', endTimestamp);
+
     const snapshot = await this.firebase
       .initCollection('water_consumption')
       .where('uid', '==', uid)
