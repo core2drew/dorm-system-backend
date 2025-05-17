@@ -11,10 +11,8 @@ export class MessageService {
   constructor(private configService: ConfigService) {}
 
   async sendMessage(contact: UserContactDTO, messageBody: string) {
-    const apiKey = this.configService.get<string>('VONAGE_API_KEY');
-    const apiSecret = this.configService.get<string>('VONAGE_API_SECRET');
-    console.log(apiKey);
-    console.log(this.configService.get<string>('twilio_account_sid'));
+    const apiKey = 'f1c18148';
+    const apiSecret = 'ukaq9BzYVmS5aBNp';
     const vonage = new Vonage({
       apiKey,
       apiSecret,
