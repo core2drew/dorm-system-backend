@@ -74,7 +74,7 @@ export class BillService {
     return {
       totalPricePerMeter,
       totalConsumption,
-      totalBill: isNaN(totalBill) ? totalBill : 0,
+      totalBill: !isNaN(totalBill) ? totalBill : 0,
     };
   }
 }
