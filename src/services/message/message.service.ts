@@ -13,7 +13,8 @@ export class MessageService {
   async sendMessage(contact: UserContactDTO, messageBody: string) {
     const apiKey = this.configService.get<string>('VONAGE_API_KEY');
     const apiSecret = this.configService.get<string>('VONAGE_API_SECRET');
-
+    console.log(apiKey);
+    console.log(apiSecret);
     const vonage = new Vonage({
       apiKey,
       apiSecret,
