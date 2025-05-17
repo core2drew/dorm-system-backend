@@ -50,7 +50,8 @@ export class BillService {
 
     const startTimestamp = Timestamp.fromDate(startOfMonth);
     const endTimestamp = Timestamp.fromDate(startOfNextMonth);
-
+    console.log('startTimestamp', startTimestamp);
+    console.log('endTimestamp', endTimestamp);
     const snapshot = await this.firebase
       .initCollection('water_consumption')
       .where('uid', '==', uid)
@@ -73,7 +74,7 @@ export class BillService {
     return {
       totalPricePerMeter,
       totalConsumption,
-      totalBill,
+      totalBill: isNaN(totalBill) ? totalBill : 0,
     };
   }
 }
