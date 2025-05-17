@@ -18,7 +18,7 @@ steps:
           echo "Creating Cloud Scheduler job..."
           gcloud scheduler jobs create http publish-job \
             --schedule="*/59 23 28-31 * *" \
-            --uri="https://$LOCATION-$PROJECT_ID.cloudfunctions.net/api/message" \
+            --uri="https://$LOCATION-$PROJECT_ID.cloudfunctions.net/api/notification/bill" \
             --http-method=POST \
             --location=$LOCATION \
         else
