@@ -7,7 +7,6 @@ import {
   WaterConsumptionSummary,
 } from './models/bill.model';
 import { User } from '../user/models/user.model';
-import { DateTime } from 'luxon';
 import { fromZonedTime } from 'date-fns-tz';
 @Injectable()
 export class BillService {
