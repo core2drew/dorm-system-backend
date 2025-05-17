@@ -48,8 +48,8 @@ export class BillService {
       1,
     );
 
-    const startTimestamp = Timestamp.fromDate(startOfMonth);
-    const endTimestamp = Timestamp.fromDate(startOfNextMonth);
+    const startTimestamp = Timestamp.fromDate(startOfMonth).toDate();
+    const endTimestamp = Timestamp.fromDate(startOfNextMonth).toDate();
     console.log('startTimestamp', startTimestamp);
     console.log('endTimestamp', endTimestamp);
     const snapshot = await this.firebase
