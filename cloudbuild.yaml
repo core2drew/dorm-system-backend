@@ -20,7 +20,7 @@ steps:
             --schedule="*/59 23 28-31 * *" \
             --uri="https://$LOCATION-$PROJECT_ID.cloudfunctions.net/api/notification/bill" \
             --http-method=POST \
-            --location=$LOCATION \
+            --location=$LOCATION
         else
           echo "Scheduler job already exists. Skipping."
         fi
