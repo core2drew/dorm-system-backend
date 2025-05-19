@@ -8,10 +8,25 @@ import { ConfigModule } from '@nestjs/config';
 import { NotificationController } from './controllers/notification/notification.controller';
 import { BillService } from './services/bill/bill.service';
 import { NotificationService } from './services/notification/notification.service';
+import { WaterConsumptionController } from './controllers/water-consumption/water-consumption.controller';
+import { WaterConsumptionService } from './services/water-consumption/water-consumption.service';
+import { RoomService } from './services/rooms/room-service';
 
 @Module({
   imports: [ConfigModule.forRoot({ cache: true }), FirebaseModule],
-  controllers: [AppController, UserController, NotificationController],
-  providers: [MessageService, UserService, BillService, NotificationService],
+  controllers: [
+    AppController,
+    UserController,
+    NotificationController,
+    WaterConsumptionController,
+  ],
+  providers: [
+    MessageService,
+    UserService,
+    BillService,
+    NotificationService,
+    WaterConsumptionService,
+    RoomService,
+  ],
 })
 export class AppModule {}
