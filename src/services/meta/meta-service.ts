@@ -38,8 +38,29 @@ export class MetaService {
           availableYears: [year],
         });
       }
+    } catch (error) {}
+  }
+
+  async addTenant(year: number, uid: string): Promise<void> {
+    try {
+      const tenantPerYearRef = this.firebase
+        .initCollection('meta')
+        .doc('tenantPerYear');
+      const tenantPerYear = await tenantPerYearRef.get();
+
+      if (tenantPerYear.exists) {
+        const existingUids = tenantPerYear.data()[year];
+        const newUids = new Set([...existingUids, uid]);
+        await tenantPerYearRef.update({
+          [year]: Array.from(newUids),
+        });
+      } else {
+        tenantPerYearRef.set({
+          [year]: [uid],
+        });
+      }
     } catch (error) {
-      handleServiceError(error, `${this.serviceName}-add-year`);
+      handleServiceError(error, `${this.serviceName}-add-tenant-per-year`);
     }
   }
 }

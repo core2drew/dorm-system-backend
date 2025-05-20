@@ -25,7 +25,7 @@ export class WaterConsumptionService {
       const date = new Date();
       const currentYear = date.getFullYear();
       this.metaService.addYear(currentYear);
-
+      this.metaService.addTenant(currentYear, uid);
       await this.firebase.initCollection('water_consumption').add({
         consumption,
         flowRate,
