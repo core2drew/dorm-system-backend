@@ -22,7 +22,7 @@ export class WaterConsumptionService {
       const { roomId, consumption, flowRate, totalCubicMeters } =
         waterConsumption;
       const { uid, name: roomNo } = await this.roomService.getRoom(roomId);
-      const currentYear = new Date().getFullYear();
+      const currentYear = new Date('2026').getFullYear();
       this.metaService.addYear(currentYear);
 
       await this.firebase.initCollection('water_consumption').add({

@@ -28,7 +28,7 @@ export class MetaService {
 
       if (years.exists) {
         const { availableYears } = years.data();
-        const yearSet = new Set(availableYears);
+        const yearSet = new Set([...availableYears, year]);
 
         await yearsRef.update({
           availableYears: Array.from(yearSet),
