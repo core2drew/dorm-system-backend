@@ -50,10 +50,16 @@ export class MetaService {
 
       if (tenantPerYear.exists) {
         const existingUids = tenantPerYear.data()[year];
-        const newUids = new Set([...existingUids, uid]);
-        await tenantPerYearRef.update({
-          [year]: Array.from(newUids),
-        });
+        if (existingUids) {
+          const newUids = new Set([...existingUids, uid]);
+          await tenantPerYearRef.update({
+            [year]: Array.from(newUids),
+          });
+        } else {
+          await tenantPerYearRef.update({
+            [year]: [uid],
+          });
+        }
       } else {
         tenantPerYearRef.set({
           [year]: [uid],

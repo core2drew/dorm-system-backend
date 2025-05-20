@@ -7,6 +7,7 @@ import { handleServiceError } from 'src/shared/utils/error-handler.util';
 import { CreateWaterConsumptionDTO } from 'src/dto/water-consumption/water-consumption.dto';
 import { RoomService } from '../rooms/room-service';
 import { MetaService } from '../meta/meta-service';
+import { WaterPriceSettingService } from '../water-price-setting/water-price-setting.service';
 
 @Injectable()
 export class WaterConsumptionService {
@@ -15,6 +16,7 @@ export class WaterConsumptionService {
     private firebase: FirebaseService,
     private roomService: RoomService,
     private metaService: MetaService,
+    private waterPriceSettingService: WaterPriceSettingService,
   ) {}
 
   async createWaterConsumption(waterConsumption: CreateWaterConsumptionDTO) {
@@ -26,6 +28,7 @@ export class WaterConsumptionService {
       const currentYear = date.getFullYear();
       this.metaService.addYear(currentYear);
       this.metaService.addTenant(currentYear, uid);
+      console.log(await this.waterPriceSettingService.getLatestPrice());
       await this.firebase.initCollection('water_consumption').add({
         consumption,
         flowRate,

@@ -13,6 +13,7 @@ import { WaterConsumptionService } from './services/water-consumption/water-cons
 import { RoomService } from './services/rooms/room-service';
 import { MetaService } from './services/meta/meta-service';
 import { MetaController } from './controllers/meta/meta.controller';
+import { WaterPriceSettingService } from './services/water-price-setting/water-price-setting.service';
 
 @Module({
   imports: [ConfigModule.forRoot({ cache: true }), FirebaseModule],
@@ -31,6 +32,7 @@ import { MetaController } from './controllers/meta/meta.controller';
     WaterConsumptionService,
     RoomService,
     MetaService,
+    WaterPriceSettingService,
   ],
 })
 export class AppModule {}
