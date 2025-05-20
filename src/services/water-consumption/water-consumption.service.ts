@@ -7,7 +7,7 @@ import { handleServiceError } from 'src/shared/utils/error-handler.util';
 import { CreateWaterConsumptionDTO } from 'src/dto/water-consumption/water-consumption.dto';
 import { RoomService } from '../rooms/room-service';
 import { MetaService } from '../meta/meta-service';
-import { format } from 'date-fns';
+
 @Injectable()
 export class WaterConsumptionService {
   readonly serviceName = 'water-consumption-service';
@@ -22,7 +22,8 @@ export class WaterConsumptionService {
       const { roomId, consumption, flowRate, totalCubicMeters } =
         waterConsumption;
       const { uid, name: roomNo } = await this.roomService.getRoom(roomId);
-      const currentYear = new Date().getFullYear();
+      const date = new Date();
+      const currentYear = date.getFullYear();
       this.metaService.addYear(currentYear);
 
       await this.firebase.initCollection('water_consumption').add({
@@ -32,7 +33,7 @@ export class WaterConsumptionService {
         uid,
         totalCubicMeters,
         year: currentYear,
-        timestamp: Timestamp.now(),
+        timestamp: Timestamp.fromDate(date),
       });
     } catch (error) {
       handleServiceError(error, `${this.serviceName}-create`);
