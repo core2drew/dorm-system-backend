@@ -11,6 +11,7 @@ import { NotificationService } from './services/notification/notification.servic
 import { WaterConsumptionController } from './controllers/water-consumption/water-consumption.controller';
 import { WaterConsumptionService } from './services/water-consumption/water-consumption.service';
 import { RoomService } from './services/rooms/room-service';
+import { MetaService } from './services/meta/meta-service';
 
 @Module({
   imports: [ConfigModule.forRoot({ cache: true }), FirebaseModule],
@@ -27,6 +28,7 @@ import { RoomService } from './services/rooms/room-service';
     NotificationService,
     WaterConsumptionService,
     RoomService,
+    MetaService,
   ],
 })
 export class AppModule {}
