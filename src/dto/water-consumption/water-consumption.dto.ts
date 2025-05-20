@@ -1,5 +1,5 @@
 import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
-
+import { OmitType } from '@nestjs/mapped-types';
 export class WaterConsumptionDTO {
   @IsNotEmpty()
   id: string;
@@ -21,4 +21,6 @@ export class WaterConsumptionDTO {
   totalCubicMeters: number;
 }
 
-export type CreateWaterConsumptionDTO = Omit<WaterConsumptionDTO, 'id'>;
+export class CreateWaterConsumptionDTO extends OmitType(WaterConsumptionDTO, [
+  'id',
+] as const) {}
