@@ -21,20 +21,20 @@ export class WaterConsumptionService {
 
   async createWaterConsumption(waterConsumption: CreateWaterConsumptionDTO) {
     try {
-      const { roomId, consumption, flowRate, totalCubicMeters } =
-        waterConsumption;
+      const { roomId, consumption } = waterConsumption;
       const { uid, name: roomNo } = await this.roomService.getRoom(roomId);
+      const pricePerMeter =
+        await this.waterPriceSettingService.getLatestPrice();
       const date = new Date();
       const currentYear = date.getFullYear();
       this.metaService.addYear(currentYear);
       this.metaService.addTenant(currentYear, uid);
-      console.log(await this.waterPriceSettingService.getLatestPrice());
+
       await this.firebase.initCollection('water_consumption').add({
         consumption,
-        flowRate,
         roomNo,
         uid,
-        totalCubicMeters,
+        pricePerMeter,
         year: currentYear,
         timestamp: Timestamp.fromDate(date),
       });

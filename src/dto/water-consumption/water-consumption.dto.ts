@@ -11,14 +11,6 @@ export class WaterConsumptionDTO {
   @IsNotEmpty()
   @IsNumber()
   consumption: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  flowRate: number;
-
-  @IsNotEmpty()
-  @IsNumber()
-  totalCubicMeters: number;
 }
 
 export class CreateWaterConsumptionDTO extends OmitType(WaterConsumptionDTO, [
