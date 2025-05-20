@@ -7,7 +7,20 @@ export class MetaService {
   readonly serviceName = 'meta-service';
   constructor(private firebase: FirebaseService) {}
 
-  async addYear(year: string) {
+  async getYears(): Promise<Array<string>> {
+    try {
+      const yearsRef = this.firebase.initCollection('meta').doc('years');
+
+      const years = await yearsRef.get();
+      const { availableYears } = years.data();
+
+      return availableYears;
+    } catch (error) {
+      handleServiceError(error, `${this.serviceName}-get-years`);
+    }
+  }
+
+  async addYear(year: string): Promise<void> {
     try {
       const yearsRef = this.firebase.initCollection('meta').doc('years');
 

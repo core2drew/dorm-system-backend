@@ -12,6 +12,7 @@ import { WaterConsumptionController } from './controllers/water-consumption/wate
 import { WaterConsumptionService } from './services/water-consumption/water-consumption.service';
 import { RoomService } from './services/rooms/room-service';
 import { MetaService } from './services/meta/meta-service';
+import { MetaController } from './controllers/meta/meta.controller';
 
 @Module({
   imports: [ConfigModule.forRoot({ cache: true }), FirebaseModule],
@@ -20,6 +21,7 @@ import { MetaService } from './services/meta/meta-service';
     UserController,
     NotificationController,
     WaterConsumptionController,
+    MetaController,
   ],
   providers: [
     MessageService,
